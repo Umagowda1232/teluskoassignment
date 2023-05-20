@@ -1,0 +1,41 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class PascalTriangle {
+
+    private static Map<String, Integer> memo = new HashMap<>();
+
+    public static int calculatePascal(int row, int col) {
+        String key = row + "," + col;
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
+
+        if (col == 0 || col == row) {
+            memo.put(key, 1);
+            return 1;
+        }
+
+        int result = calculatePascal(row - 1, col - 1) + calculatePascal(row - 1, col);
+        memo.put(key, result);
+        return result;
+    }
+
+    public static void printPascalTriangle(int numRows) {
+        for (int row = 0; row < numRows; row++) {
+            for (int space = 0; space < numRows - row; space++) {
+                System.out.print("  ");
+            }
+            for (int col = 0; col <= row; col++) {
+                int pascalValue = calculatePascal(row, col);
+                System.out.print(pascalValue + "   ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        int numRows = 5; // Specify the number of rows you want to print
+        printPascalTriangle(numRows);
+    }
+}
